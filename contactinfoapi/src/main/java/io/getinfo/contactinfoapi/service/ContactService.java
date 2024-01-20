@@ -21,6 +21,7 @@ import java.util.function.Function;
 
 //import static org.springframework.jmx.support.RegistrationPolicy.REPLACE_EXISTING;
 
+import static io.getinfo.contactinfoapi.constant.constant.PHOTO_DIRECTORY;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
@@ -65,7 +66,7 @@ public class ContactService {
     private final BiFunction<String, MultipartFile, String> photoFunction = (id, image) -> {
         String filename = id+ fileExtension.apply(image.getOriginalFilename());
         try{
-            Path fileStorageLocation = Paths.get("").toAbsolutePath().normalize();
+            Path fileStorageLocation = Paths.get(PHOTO_DIRECTORY).toAbsolutePath().normalize();
             if (!Files.exists(fileStorageLocation)){
                 Files.createDirectories(fileStorageLocation);
             }
