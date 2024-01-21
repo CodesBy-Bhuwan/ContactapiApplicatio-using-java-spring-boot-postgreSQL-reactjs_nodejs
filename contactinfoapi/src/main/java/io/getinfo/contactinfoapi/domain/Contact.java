@@ -21,6 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+//this @Json will hide the null content, to see null content then we can ignore it
 @JsonInclude(NON_DEFAULT)
 public class Contact {
     @Id
