@@ -35,8 +35,13 @@ function App() {
   }
 
 const onChange= (event) => {
-  setValues({...values, [event.target.name]: event.target.value })
+  setValues({...contact, [event.target.name]: event.target.value })
 };
+const onUpdateContact = async(event) =>{
+  event.preventDefault()
+  await updateContact(contact)
+  fetchContact(id)
+}
 
 const handleNewContact = async (event) => {
   event.preventDefault();
@@ -52,6 +57,7 @@ const handleNewContact = async (event) => {
     setFile(undefined);
     fileRef.current.value = null;
     setValues({
+      id:'',
       name:'',
       email:'',
       phone:'',
@@ -65,7 +71,14 @@ const handleNewContact = async (event) => {
     console.log(error);
   }
 }
-const updateContact = async() => {};
+const updateContact = async(contact) => {
+  try{
+    const {data} = await saveContact(contact);
+    await saveContact(data)
+  }catch(error){
+    console.log(error);
+  }
+};
 
 const updateImage = async(formData) => {
   try{
