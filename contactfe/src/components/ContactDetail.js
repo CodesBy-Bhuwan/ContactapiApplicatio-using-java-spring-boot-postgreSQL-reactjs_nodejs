@@ -37,8 +37,9 @@ const ContactDetail = ({ updateContact, updateImage}) => {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('id', id);
-        const { data } = await updateImage(formData);
-        // setContact(data);    
+        await updateImage(formData);
+        setContact((prev) => ({...prev, photoUrl: `${prev.photoUrl}?updated_at=${new Date().getTime()}`}));
+        setContact('data');    
         }catch(error){
         console.log(error);
         }
