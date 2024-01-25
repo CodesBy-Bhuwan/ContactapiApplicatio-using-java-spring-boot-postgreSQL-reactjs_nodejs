@@ -9,7 +9,7 @@ const Header = ({ toggleModel, nbOfContacts }) => {
         <div className='container'>
             <h3>Contact List ({nbOfContacts})</h3>
             <button className='btn' onClick={()=> toggleModel(true)}>
-                <i className='bi bi-plus-sgit quare'></i> Add New Contact</button>
+                <i className='bi bi-plus-square'></i> Add New Contact</button>
         </div>
       </header>
     </div>
