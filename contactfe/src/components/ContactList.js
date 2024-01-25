@@ -21,7 +21,7 @@ const ContactList = ({ data, currentPage, getAllcontacts }) => {
                 {/* this means << sign in html entity */}
             </a>
             {data && [ ...Array(data.totalPages).keys()].map((page, index) => 
-            <a onClick={getAllcontacts(page)} className={currentPage === page ? 'active' : ''} key={page}>{page + 1}</a>)}
+            <a onClick={() => getAllcontacts(page)} className={currentPage === page ? 'active' : ''} key={page}>{page + 1}</a>)}
 
 
             {/* similary this is for last page*/}
