@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import './App.css';
-import { getContacts, saveContact, updateContact, updatePhoto } from './api/ContactService';
+import 'react-toastify/dist/ReactToastify.css';
+import { getContacts, saveContact, updatePhoto } from './api/ContactService';
 import Header from './components/Header'
 import ContactList from './components/ContactList'
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ContactDetail from './components/ContactDetail';
+import { ToastContainer } from 'react-toastify';
+import { toastError } from './api/ToastService';
 
 function App() {
   const modalRef = useRef();
@@ -31,17 +33,18 @@ function App() {
     catch(error){
       console.log(error);
       // fileRef.current.value = null;
+      toastError(error.message);
     }
   }
 
 const onChange= (event) => {
-  setValues({...contact, [event.target.name]: event.target.value })
+  setValues({...values, [event.target.name]: event.target.value })
 };
-const onUpdateContact = async(event) =>{
-  event.preventDefault()
-  await updateContact(contact)
-  fetchContact(id)
-}
+// const onUpdateContact = async(event) =>{
+//   event.preventDefault()
+//   await updateContact(contact)
+//   fetchContact(id)
+// }
 
 const handleNewContact = async (event) => {
   event.preventDefault();
@@ -57,7 +60,7 @@ const handleNewContact = async (event) => {
     setFile(undefined);
     fileRef.current.value = null;
     setValues({
-      id:'',
+      // id:'',
       name:'',
       email:'',
       phone:'',
@@ -69,14 +72,17 @@ const handleNewContact = async (event) => {
 
   }catch(error){
     console.log(error);
+    toastError(error.message);
   }
 }
 const updateContact = async(contact) => {
   try{
     const {data} = await saveContact(contact);
-    await saveContact(data)
+    // await saveContact(data)
+    console.log(data);
   }catch(error){
     console.log(error);
+    toastError(error.message);
   }
 };
 
@@ -86,6 +92,7 @@ const updateImage = async(formData) => {
 
   }catch(error){
     console.log(error);
+    toastError(error.message);
   }
 };
 
@@ -97,7 +104,7 @@ useEffect(() => {
 
   return (
     <>
-    <Header toggleModel = {toggleModel} nbOfContacts = { data.totlaElements } />
+    <Header toggleModal = {toggleModal} nbOfContacts = { data.totlaElements } />
     <main className='main'>
       <div className='container'>
         <Routes>

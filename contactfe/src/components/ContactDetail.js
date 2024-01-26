@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { updatePhoto } from '../api/ContactService';
+import { Link, useParams } from 'react-router-dom';
+import { useRef } from 'react';
+import { getContact } from '../api/ContactService';
+import { toastError, toastSuccess } from '../api/ToastService';
 
 
 const ContactDetail = ({ updateContact, updateImage}) => {
@@ -24,8 +25,10 @@ const ContactDetail = ({ updateContact, updateImage}) => {
         try{
         const { data } = await getContact(id);
         setContact(data);    
+        toastSuccess('Contact Retrived');
         }catch(error){
         console.log(error);
+        toastError(error.message)
         }
   };
 
@@ -40,8 +43,10 @@ const ContactDetail = ({ updateContact, updateImage}) => {
         await updateImage(formData);
         setContact((prev) => ({...prev, photoUrl: `${prev.photoUrl}?updated_at=${new Date().getTime()}`}));
         setContact('data');    
+        toastSuccess('Photo Uploaded');
         }catch(error){
         console.log(error);
+        toastError(error.message)
         }
   };
   const onChange = (event) => {
@@ -51,6 +56,7 @@ const ContactDetail = ({ updateContact, updateImage}) => {
   const onUpdateContact = async(event) => {
     event.preventDefault();
     updateContact(contact);
+    toastSuccess('Contact Updated');
   }
 
 
